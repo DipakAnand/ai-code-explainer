@@ -60,7 +60,7 @@ const checkBackend = async () => {
 
       const data = await response.json();
       setResponse(data.message);
-      setExplanation("");
+      setExplanation(data.explanation);
     }
     catch (error) {
       console.log("Error:", error);

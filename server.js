@@ -2,6 +2,10 @@
 
 const express = require("express");
 const cors = require("cors");
+const OpenAI = require("openai");
+
+require("dotenv").config();
+const openai = new OpenAI();
 
 const app = express();
 
@@ -18,14 +22,20 @@ app.get("/api/health", (req, res) => {
 });
 
 // POST API
-app.post("/api/explain", (req, res) => {
+app.post("/api/explain", async (req, res) => {
   const { code } = req.body;
 
   console.log("Code received from React:", code);
+  const aiResponse = await openai.responses.create({
+  model: "gpt-5.5",
+  instructions: "You are an expert JavaScript teacher. Explain code in simple beginner-friendly language, step by step.",
+  input: code
+});
 
   res.json({
-    message: "Code received successfully!",
-    receivedCode: code
+    message: "Code explained successfully!",
+    receivedCode: code,
+    explanation: aiResponse.output_text
   });
 });
 
