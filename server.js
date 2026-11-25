@@ -25,18 +25,28 @@ app.get("/api/health", (req, res) => {
 app.post("/api/explain", async (req, res) => {
   const { code } = req.body;
 
-  console.log("Code received from React:", code);
-  const aiResponse = await openai.responses.create({
-  model: "gpt-5.5",
-  instructions: "You are an expert JavaScript teacher. Explain code in simple beginner-friendly language, step by step.",
-  input: code
-});
+//   console.log("Code received from React:", code);
+//   const aiResponse = await openai.responses.create({
+//   model: "gpt-5.5",
+//   instructions: "You are an expert JavaScript teacher. Explain code in simple beginner-friendly language, step by step.",
+//   input: code
+// });
 
+//   res.json({
+//     message: "Code explained successfully!",
+//     receivedCode: code,
+//     explanation: aiResponse.output_text
+  //   });
   res.json({
-    message: "Code explained successfully!",
-    receivedCode: code,
-    explanation: aiResponse.output_text
-  });
+  message: "Code explained successfully!",
+  receivedCode: code,
+  explanation: `Here is your code:
+
+  ${code}
+
+  This code was received successfully by our backend.
+  A real AI explanation will be generated when we connect the OpenAI API again.`
+});
 });
 
 // Start server
